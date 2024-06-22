@@ -1,0 +1,296 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #66c7f4;
+}
+
+.loading {
+  width: 150px;
+  height: 150px;
+  margin: 50px auto;
+  position: relative;
+  border-radius: 50%;
+}
+.loading .dot {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  margin-top: -5px;
+  transform-origin: center 80px;
+  perspective: 70px;
+  transform-style: preserve-3d;
+}
+.loading .dot:nth-child(1) {
+  transform: rotate(10deg);
+}
+.loading .dot:nth-child(1)::before, .loading .dot:nth-child(1)::after {
+  animation-delay: 0s;
+}
+.loading .dot:nth-child(2) {
+  transform: rotate(20deg);
+}
+.loading .dot:nth-child(2)::before, .loading .dot:nth-child(2)::after {
+  animation-delay: -0.3333333333s;
+}
+.loading .dot:nth-child(3) {
+  transform: rotate(30deg);
+}
+.loading .dot:nth-child(3)::before, .loading .dot:nth-child(3)::after {
+  animation-delay: -0.6666666667s;
+}
+.loading .dot:nth-child(4) {
+  transform: rotate(40deg);
+}
+.loading .dot:nth-child(4)::before, .loading .dot:nth-child(4)::after {
+  animation-delay: -1s;
+}
+.loading .dot:nth-child(5) {
+  transform: rotate(50deg);
+}
+.loading .dot:nth-child(5)::before, .loading .dot:nth-child(5)::after {
+  animation-delay: -1.3333333333s;
+}
+.loading .dot:nth-child(6) {
+  transform: rotate(60deg);
+}
+.loading .dot:nth-child(6)::before, .loading .dot:nth-child(6)::after {
+  animation-delay: -1.6666666667s;
+}
+.loading .dot:nth-child(7) {
+  transform: rotate(70deg);
+}
+.loading .dot:nth-child(7)::before, .loading .dot:nth-child(7)::after {
+  animation-delay: -2s;
+}
+.loading .dot:nth-child(8) {
+  transform: rotate(80deg);
+}
+.loading .dot:nth-child(8)::before, .loading .dot:nth-child(8)::after {
+  animation-delay: -2.3333333333s;
+}
+.loading .dot:nth-child(9) {
+  transform: rotate(90deg);
+}
+.loading .dot:nth-child(9)::before, .loading .dot:nth-child(9)::after {
+  animation-delay: -2.6666666667s;
+}
+.loading .dot:nth-child(10) {
+  transform: rotate(100deg);
+}
+.loading .dot:nth-child(10)::before, .loading .dot:nth-child(10)::after {
+  animation-delay: -3s;
+}
+.loading .dot:nth-child(11) {
+  transform: rotate(110deg);
+}
+.loading .dot:nth-child(11)::before, .loading .dot:nth-child(11)::after {
+  animation-delay: -3.3333333333s;
+}
+.loading .dot:nth-child(12) {
+  transform: rotate(120deg);
+}
+.loading .dot:nth-child(12)::before, .loading .dot:nth-child(12)::after {
+  animation-delay: -3.6666666667s;
+}
+.loading .dot:nth-child(13) {
+  transform: rotate(130deg);
+}
+.loading .dot:nth-child(13)::before, .loading .dot:nth-child(13)::after {
+  animation-delay: -4s;
+}
+.loading .dot:nth-child(14) {
+  transform: rotate(140deg);
+}
+.loading .dot:nth-child(14)::before, .loading .dot:nth-child(14)::after {
+  animation-delay: -4.3333333333s;
+}
+.loading .dot:nth-child(15) {
+  transform: rotate(150deg);
+}
+.loading .dot:nth-child(15)::before, .loading .dot:nth-child(15)::after {
+  animation-delay: -4.6666666667s;
+}
+.loading .dot:nth-child(16) {
+  transform: rotate(160deg);
+}
+.loading .dot:nth-child(16)::before, .loading .dot:nth-child(16)::after {
+  animation-delay: -5s;
+}
+.loading .dot:nth-child(17) {
+  transform: rotate(170deg);
+}
+.loading .dot:nth-child(17)::before, .loading .dot:nth-child(17)::after {
+  animation-delay: -5.3333333333s;
+}
+.loading .dot:nth-child(18) {
+  transform: rotate(180deg);
+}
+.loading .dot:nth-child(18)::before, .loading .dot:nth-child(18)::after {
+  animation-delay: -5.6666666667s;
+}
+.loading .dot:nth-child(19) {
+  transform: rotate(190deg);
+}
+.loading .dot:nth-child(19)::before, .loading .dot:nth-child(19)::after {
+  animation-delay: -6s;
+}
+.loading .dot:nth-child(20) {
+  transform: rotate(200deg);
+}
+.loading .dot:nth-child(20)::before, .loading .dot:nth-child(20)::after {
+  animation-delay: -6.3333333333s;
+}
+.loading .dot:nth-child(21) {
+  transform: rotate(210deg);
+}
+.loading .dot:nth-child(21)::before, .loading .dot:nth-child(21)::after {
+  animation-delay: -6.6666666667s;
+}
+.loading .dot:nth-child(22) {
+  transform: rotate(220deg);
+}
+.loading .dot:nth-child(22)::before, .loading .dot:nth-child(22)::after {
+  animation-delay: -7s;
+}
+.loading .dot:nth-child(23) {
+  transform: rotate(230deg);
+}
+.loading .dot:nth-child(23)::before, .loading .dot:nth-child(23)::after {
+  animation-delay: -7.3333333333s;
+}
+.loading .dot:nth-child(24) {
+  transform: rotate(240deg);
+}
+.loading .dot:nth-child(24)::before, .loading .dot:nth-child(24)::after {
+  animation-delay: -7.6666666667s;
+}
+.loading .dot:nth-child(25) {
+  transform: rotate(250deg);
+}
+.loading .dot:nth-child(25)::before, .loading .dot:nth-child(25)::after {
+  animation-delay: -8s;
+}
+.loading .dot:nth-child(26) {
+  transform: rotate(260deg);
+}
+.loading .dot:nth-child(26)::before, .loading .dot:nth-child(26)::after {
+  animation-delay: -8.3333333333s;
+}
+.loading .dot:nth-child(27) {
+  transform: rotate(270deg);
+}
+.loading .dot:nth-child(27)::before, .loading .dot:nth-child(27)::after {
+  animation-delay: -8.6666666667s;
+}
+.loading .dot:nth-child(28) {
+  transform: rotate(280deg);
+}
+.loading .dot:nth-child(28)::before, .loading .dot:nth-child(28)::after {
+  animation-delay: -9s;
+}
+.loading .dot:nth-child(29) {
+  transform: rotate(290deg);
+}
+.loading .dot:nth-child(29)::before, .loading .dot:nth-child(29)::after {
+  animation-delay: -9.3333333333s;
+}
+.loading .dot:nth-child(30) {
+  transform: rotate(300deg);
+}
+.loading .dot:nth-child(30)::before, .loading .dot:nth-child(30)::after {
+  animation-delay: -9.6666666667s;
+}
+.loading .dot:nth-child(31) {
+  transform: rotate(310deg);
+}
+.loading .dot:nth-child(31)::before, .loading .dot:nth-child(31)::after {
+  animation-delay: -10s;
+}
+.loading .dot:nth-child(32) {
+  transform: rotate(320deg);
+}
+.loading .dot:nth-child(32)::before, .loading .dot:nth-child(32)::after {
+  animation-delay: -10.3333333333s;
+}
+.loading .dot:nth-child(33) {
+  transform: rotate(330deg);
+}
+.loading .dot:nth-child(33)::before, .loading .dot:nth-child(33)::after {
+  animation-delay: -10.6666666667s;
+}
+.loading .dot:nth-child(34) {
+  transform: rotate(340deg);
+}
+.loading .dot:nth-child(34)::before, .loading .dot:nth-child(34)::after {
+  animation-delay: -11s;
+}
+.loading .dot:nth-child(35) {
+  transform: rotate(350deg);
+}
+.loading .dot:nth-child(35)::before, .loading .dot:nth-child(35)::after {
+  animation-delay: -11.3333333333s;
+}
+.loading .dot:nth-child(36) {
+  transform: rotate(360deg);
+}
+.loading .dot:nth-child(36)::before, .loading .dot:nth-child(36)::after {
+  animation-delay: -11.6666666667s;
+}
+.loading .dot::before, .loading .dot::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.loading .dot::before {
+  background-color: #000;
+  top: -100%;
+  animation: rotate-black 2s infinite;
+}
+@keyframes rotate-black {
+  0% {
+    animation-timing-function: ease-in;
+  }
+  25% {
+    transform: translate3d(0, 100%, 10px);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translate3d(0, 200%, 0);
+    animation-timing-function: ease-in;
+  }
+  75% {
+    transform: translate3d(0, 100%, -10px);
+    animation-timing-function: ease-out;
+  }
+}
+.loading .dot::after {
+  background-color: #fff;
+  top: 100%;
+  animation: rotate-white 2s infinite;
+}
+@keyframes rotate-white {
+  0% {
+    animation-timing-function: ease-in;
+  }
+  25% {
+    transform: translate3d(0, -100%, -10px);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translate3d(0, -200%, 0);
+    animation-timing-function: ease-in;
+  }
+  75% {
+    transform: translate3d(0, -100%, 10px);
+    animation-timing-function: ease-out;
+  }
+}/*# sourceMappingURL=index.css.map */
