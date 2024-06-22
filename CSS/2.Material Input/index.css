@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#username {
+  border: none;
+}
+
+.form-item .bar {
+  transform: translate(-50%, -50%);
+  background-color: #5264ae;
+  transition: 0.4s ease;
+}
+
+.form-item input:focus ~ .bar {
+  width: 100%;
+}
+/* 当文本框有文字时 */
+.form-item input:valid ~ label,
+.form-item input:focus ~ label {
+  color: #5264ae;
+  transform: translateY(-40px);
+  font-size: 16px;
+}
