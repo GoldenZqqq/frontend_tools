@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG Filter</title>
+  </head>
+  <body>
+    <svg viewBox="0 0 600 330">
+      <defs>
+        <filter id="conform">
+          <feImage
+            href="bg.jpg"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            preserveAspectRatio="none"
+            result="ORIGIN_IMAGE"
+          ></feImage>
+          <feColorMatrix
+            in="ORIGIN_IMAGE"
+            type="saturate"
+            values="0"
+            result="GRAY_IMAGE"
+          ></feColorMatrix>
+          <!-- 置换滤镜：两个输入 一个输出 -->
+          <!-- 第一个输入：原始图像 text -->
+          <!-- 第二个输入：灰度图 -->
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="GRAY_IMAGE"
+            scale="15"
+            xChannelSelector="R"
+            yChannelSelector="R"
+            result="TEXTURED_TEXT"
+          ></feDisplacementMap>
+          <!-- 颜色矩阵滤镜 -->
+          <feColorMatrix
+            in="TEXTURED_TEXT"
+            result="OPACITY_TEXT"
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 .9 0"
+          ></feColorMatrix>
+          <!-- 图片滤镜 -->
+          <feImage
+            href="bg.jpg"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            preserveAspectRatio="none"
+            result="BG"
+          ></feImage>
+          <!-- 混合滤镜 -->
+          <feBlend in="BG" in2="OPACITY_TEXT" mode="multiply"></feBlend>
+        </filter>
+      </defs>
+      <Image
+        href="bg.jpg"
+        x="0"
+        y="0"
+        width="100%"
+        height="100%"
+        preserveAspectRatio="none"
+      ></Image>
+      <text
+        x="50%"
+        y="50%"
+        font-size="10em"
+        font-weight="bold"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        fill="#000"
+        filter="url(#conform)"
+      >
+        LOGO
+      </text>
+    </svg>
+  </body>
+</html>
