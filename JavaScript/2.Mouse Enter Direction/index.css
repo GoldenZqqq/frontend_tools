@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.abc {
+  overflow: hidden;
+}
+.container {
+  width: 400px;
+  height: 400px;
+  background-color: #ccc;
+  background-image: url("https://dogefs.s3.ladydaily.com/~/source/unsplash/plus/premium_photo-1683910665313-877b5dd42d4a?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: 100% 100%;
+  background-position: top;
+}
+
+/* .top,
+.bottom,
+.left,
+.right {
+} */
+
+.top {
+  background-image: url("https://dogefs.s3.ladydaily.com/~/source/unsplash/photo-1718888821451-d49db6980a00?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  animation: slide-top-in 1s forwards;
+}
+
+.bottom {
+  background-image: url("https://dogefs.s3.ladydaily.com/~/source/unsplash/photo-1719515853811-1dc2cf112e24?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  animation: slide-bottom-in 1s forwards;
+}
+
+.left {
+  background-image: url("https://dogefs.s3.ladydaily.com/~/source/unsplash/photo-1719530910223-80eee3e889cb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90b3MtZmVlZHwxMnx8fGVufDB8fHx8fA%3D%3D");
+  animation: slide-left-in 1s forwards;
+}
+
+.right {
+  background-image: url("https://dogefs.s3.ladydaily.com/~/source/unsplash/photo-1719230693591-481437cbd4a5?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  animation: slide-right-in 1s forwards;
+}
+
+@keyframes slide-top-in {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-bottom-in {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left-in {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-right-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
