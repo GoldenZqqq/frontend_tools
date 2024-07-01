@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: auto;
+  padding: 15px;
+  position: fixed;
+  left: 50%;
+  translate: -50% 0;
+  bottom: 20px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  display: flex;
+  align-items: flex-end;
+  box-sizing: border-box;
+}
+
+.item {
+  --scale: 1;
+  padding-bottom: calc((var(--scale) * 50px) - (50px / var(--scale)));
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  transition: all 0.35s;
+}
+
+.menu {
+  width: calc(50px * var(--scale));
+  height: calc(50px * var(--scale));
+  background: #000;
+  border-radius: calc(10px * var(--scale));
+  transition: all 0.35s;
+  cursor: pointer;
+}
+
+.gap {
+  width: calc(15px * var(--scale));
+  height: 50px;
+  background: transparent;
+  transition: all 0.35s;
+}
