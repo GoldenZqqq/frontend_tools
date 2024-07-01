@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #161616;
+}
+
+.img-container {
+  margin: 100px auto;
+  height: 300px;
+  width: 300px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.img-item {
+  box-shadow: inset 0 0 0 1px #fff;
+  transition: 0.5s;
+  background-size: 300px 300px;
+  background-image: url("../assets/Crayon.jpeg");
+  background-position: var(--bgX, 0) var(--bgY, 0);
+  transform: translate(var(--disX, 0), var(--disY, 0));
+}
+
+.img-container:hover .img-item {
+  transform: translate(0, 0);
+  box-shadow: inset 0 0 0 0 #fff;
+}
