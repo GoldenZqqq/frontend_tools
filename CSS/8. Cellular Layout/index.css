@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+}
+
+.line {
+  display: flex;
+}
+.line:nth-child(even) {
+  transform: translateX(-5.5555555556vw);
+}
+.line:nth-child(n+2) {
+  margin-top: -1.8518518519vw;
+}
+
+.item {
+  flex-shrink: 0;
+  width: 11.1111111111vw;
+  height: 11.1111111111vw;
+  background: #000;
+  outline: 1px solid #f40;
+  -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 95%, 5% 75%, 5% 25%);
+          clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 95%, 5% 75%, 5% 25%);
+}/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+}
+
+$n: 9;
+$size: 100vw / $n;
+
+.line {
+  display: flex;
+  &:nth-child(even) {
+    transform: translateX(-$size / 2);
+  }
+  &:nth-child(n + 2) {
+    margin-top: -$size / 6;
+  }
+}
+
+.item {
+  flex-shrink: 0;
+  width: $size;
+  height: $size;
+  background: #000;
+  outline: 1px solid #f40;
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 95%, 5% 75%, 5% 25%);
+}
