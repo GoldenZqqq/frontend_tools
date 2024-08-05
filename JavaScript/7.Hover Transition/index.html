@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hover Transition</title>
+    <style>
+      :root {
+        /* 新属性 默认值为 numeric-only    可选值 allow-keywords */
+        /* interpolate-size: numeric-only;  */ 
+      }
+      .btn {
+        position: relative;
+        border: none;
+        outline: none;
+        background: #3a8ee6;
+        color: #fff;
+        display: inline-block;
+        line-height: 1;
+        cursor: pointer;
+        text-align: center;
+        transition: 0.1s;
+        font-weight: 500;
+        user-select: none;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 4px;
+      }
+      .btn:hover {
+        background: #3a8ee6;
+      }
+      .btn:active {
+        background: #3a8ee6;
+      }
+      .btn:disabled {
+        background: #3a8ee6;
+        cursor: not-allowed;
+      }
+      .detail {
+        position: relative;
+        left: 0;
+        top: 100%;
+        overflow: hidden;
+        padding-top: 0.2em;
+      }
+      .content {
+        width: 200px;
+        border-radius: 5px;
+        background: #3a8ee6;
+        color: #fff;
+        line-height: 1.5;
+      }
+      .inner {
+        padding: 20px;
+      }
+
+      .content {
+        height: 0;
+        transition: 0.5s;
+      }
+
+      .btn:hover .content {
+        /* Chrome 123版本可打开Experimental Web Platform features使用  128版本默认启用 */
+        height: calc-size(auto);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="btn">
+      hover me
+      <div class="detail">
+        <div class="content">
+          <div class="inner">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit quos,
+            quibusdam beatae assumenda aliquid quaerat neque, qui consequatur
+            nobis illum, unde alias veritatis. Earum enim mollitia harum
+            facilis, praesentium neque!
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
