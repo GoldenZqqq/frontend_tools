@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片调色盘</title>
+
+    <style>
+      :root {
+        --c1: #fff;
+        --c2: #fff;
+        --c3: #fff;
+      }
+      html {
+        background: linear-gradient(
+          to bottom,
+          var(--c1) 20%,
+          var(--c2) 50%,
+          var(--c3) 80%
+        );
+        transition: background 0.8s ease-in-out; /* 平滑过渡的时间和缓动效果 */
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 2rem;
+      }
+
+      .item {
+        width: 45%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+      }
+      .item:hover {
+        border: 5px solid #fff;
+        scale: 0.9;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <div class="item">
+        <img
+          src="https://picsum.photos/500/300?r=1"
+          crossorigin="anonymous"
+          onmouseenter="handleMouseEnter(event.target,1)"
+          onmouseleave="handleMouseLeave()"
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://picsum.photos/500/300?r=2"
+          crossorigin="anonymous"
+          onmouseenter="handleMouseEnter(event.target,2)"
+          onmouseleave="handleMouseLeave()"
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://picsum.photos/500/300?r=3"
+          crossorigin="anonymous"
+          onmouseenter="handleMouseEnter(event.target,3)"
+          onmouseleave="handleMouseLeave()"
+        />
+      </div>
+      <div class="item">
+        <img
+          src="https://picsum.photos/500/300?r=4"
+          crossorigin="anonymous"
+          onmouseenter="handleMouseEnter(event.target,4)"
+          onmouseleave="handleMouseLeave()"
+        />
+      </div>
+    </div>
+    <script src="./color-thief.umd.js"></script>
+    <script>
+      const colorThief = new ColorThief()
+      const html = document.documentElement
+      async function handleMouseEnter(img, i) {
+        img.onload = () => {
+          let colors = colorThief.getPalette(img, 3)
+          console.log("colors", colors)
+          colors = colors.map(c => `rgb(${c[0]},${c[1]},${c[2]})`)
+          html.style.setProperty("--c1", colors[0])
+          html.style.setProperty("--c2", colors[1])
+          html.style.setProperty("--c3", colors[2])
+        }
+
+        if (img.complete) {
+          img.onload()
+        }
+      }
+      function handleMouseLeave() {
+        html.style.setProperty("--c1", "#fff")
+        html.style.setProperty("--c2", "#fff")
+        html.style.setProperty("--c3", "#fff")
+      }
+    </script>
+  </body>
+</html>
