@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>行盒样式不截断</title>
+    <style>
+      .container {
+        line-height: 2;
+        font-size: 1.5em;
+        margin: 2em;
+      }
+      .highlight {
+        background: linear-gradient(#d5e8b7,#bad6b3);
+        border: 2px solid #7e876b;
+        padding: 0 0.5em;
+        border-radius: 5px;
+        /* 默认值为：slice */
+        /* 行末被截断的位置按照首尾的样式来处理 */
+        box-decoration-break: clone;
+        /* 兼容webkit内核浏览器 */
+        -webkit-box-decoration-break: clone;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore suscipit
+      culpa voluptate, quasi minus rerum doloribus nisi illum iusto eveniet
+      consectetur dolores accusamus, ipsa provident sequi ducimus? Maiores,
+      quidem id.
+      <span class="highlight">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio id odit
+        aliquam dolorum, consequatur rerum reiciendis quidem, nulla
+        necessitatibus, quae provident iure dolores ipsa minus cupiditate
+        perspiciatis facere vitae? Veniam?
+      </span>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
+      vel voluptatem iste tenetur eius adipisci sequi praesentium sed, assumenda
+      expedita ducimus amet pariatur perspiciatis natus alias ipsum voluptatum
+      doloremque dicta.
+    </div>
+  </body>
+</html>
