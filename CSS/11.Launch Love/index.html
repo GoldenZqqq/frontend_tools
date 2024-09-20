@@ -52,19 +52,43 @@
         /*background-color: gray;*/
       }
 
-      .container .fashe {
+      .container .pink-pig {
         color: #ffa0a0;
         position: absolute;
         font-size: 30px;
         font-weight: bold;
-        bottom: 300px;
+        top: 75%;
         left: 300px;
         transition: 5s linear;
         z-index: 999;
       }
-      .fashe.move {
-        bottom: 700px;
-        left: 1050px;
+
+      .pink-pig.move {
+        top: 22%;
+        left: calc(50% - 40px);
+      } /* 在原有样式的基础上，新增 love-text 和伪元素的样式 */
+
+      .love-text {
+        position: relative; /* 为伪元素提供相对定位的参考点 */
+        padding: 10px 20px; /* 给文字加一些内边距 */
+        font-size: 30px;
+        font-weight: bold;
+        color: #ffa0a0; /* 保持原来的文字颜色 */
+        z-index: 999;
+      }
+
+      .love-text::before {
+        content: "";
+        position: absolute;
+        top: -10px; /* 调整位置使其包围文字 */
+        left: -10px;
+        width: calc(100% + 20px); /* 确保边框包裹住文字 */
+        height: calc(100% + 20px);
+        background-color: transparent;
+        border: 3px solid pink; /* 设置粉色边框 */
+        border-radius: 50%; /* 让边框呈现圆形 */
+        box-shadow: 0 0 10px 5px rgba(255, 182, 193, 0.6); /* 给边框加一些阴影，让其显得更明显 */
+        z-index: -1; /* 保证边框在文字后面 */
       }
 
       .love .block {
@@ -216,7 +240,7 @@
       <div class="body_left">
         <img src="images/biubiubiu.gif" alt="" ondragstart="return false;" />
       </div>
-      <div class="fashe">猪猪小宝</div>
+      <div class="pink-pig love-text">猪猪小宝</div>
 
       <div class="body_center love">
         <div class="block">
@@ -487,13 +511,13 @@
       }
 
       window.onload = function () {
-        const fashe = document.querySelector(".fashe")
+        const pinkPig = document.querySelector(".pink-pig")
         setTimeout(() => {
-          fashe.classList.add("move") // 添加move类触发移动
+          pinkPig.classList.add("move") // 添加move类触发移动
           timer = setInterval(() => {
             Next()
           }, 300)
-        }, 12000) //gif图播放完毕所需时间为11.73s
+        }, 100) //gif图播放完毕所需时间为11.73s
       }
     </script>
   </body>
