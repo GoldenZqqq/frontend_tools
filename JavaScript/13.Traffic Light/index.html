@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Light</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="traffic-light">
+      <div class="light-container">
+        <div class="light green"></div>
+        <div class="light yellow"></div>
+        <div class="light red"></div>
+      </div>
+      <div class="time">90</div>
+    </div>
+
+    <script type="module">
+      import { TrafficLight } from "./TrafficLight.js"
+      const light = new TrafficLight([
+        {
+          color: "red",
+          lasts: 3000
+        },
+        {
+          color: "yellow",
+          lasts: 2000
+        },
+        {
+          color: "green",
+          lasts: 5000
+        }
+      ])
+
+      const trafficLight = document.querySelector(".traffic-light")
+      const time = document.querySelector(".time")
+
+      function update() {
+        const current = light.getCurrentLight()
+        trafficLight.className = `traffic-light ${current.color}`
+        time.textContent = Math.ceil(current.remain / 1000)
+      }
+      update()
+      function raf(params) {
+        requestAnimationFrame(() => {
+          raf()
+          update()
+        })
+      }
+      raf()
+    </script>
+  </body>
+</html>
