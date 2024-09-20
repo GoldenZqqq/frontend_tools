@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>svg图标描边动画</title>
+    <style>
+      .p {
+        fill: none;
+        stroke: #f40;
+        stroke-width: 10;
+        /* 虚线间隔 */
+        stroke-dasharray: var(--l);
+        /* 虚线偏移量 */
+        stroke-dashoffset: var(--l);
+        animation: stroke 2s forwards;
+        /* 线头变圆 */
+        stroke-linecap: round;  
+      }
+      @keyframes stroke {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg class="icon" width="200" height="200">
+      <!-- <line class="p" x="0" y1="50%" x2="50%" y2="50%" /> -->
+       <circle class="p" cx="50%" cy="50%" r="30%"></circle>
+    </svg>
+
+    <script>
+      const paths = document.querySelectorAll(".icon .p")
+      paths.forEach(path => {
+        const len = path.getTotalLength()
+        path.style.setProperty("--l", len + 1)
+      })
+    </script>
+  </body>
+</html>
