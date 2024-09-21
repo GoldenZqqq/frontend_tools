@@ -1,13 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
+  overflow: hidden;
+  background: #000;
+}
+
+.audioContainer {
+  margin: 0 auto;
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #000000;
+}
+
+audio {
+  margin: 30px;
 }
 
 canvas {
-  border-radius: 50%;
-  background-color: transparent;
+  display: block;
+  margin: 0 auto;
+  background: transparent;
 }
