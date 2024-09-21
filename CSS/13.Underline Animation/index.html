@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS下划线动画</title>
+    <style>
+      .title {
+        color: #333;
+        line-height: 2;
+      }
+      .title span {
+        background:linear-gradient(to right,#ec6b5f,#61c554) no-repeat;
+        background-size: 0 2px;
+        background-position: right bottom;
+        transition: background-size 2s ease;
+      }
+      .title:hover span {
+        background-position: left bottom;
+        background-size: 100% 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 class="title">
+      <span>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, illo
+      aliquam rerum et iusto assumenda eius vero! Velit, debitis ex illum nobis
+      dolor molestiae facilis harum asperiores explicabo aut laboriosam.
+    </span>
+    </div>
+  </body>
+</html>
