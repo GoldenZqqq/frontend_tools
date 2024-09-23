@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片裁剪上传</title>
+  </head>
+  <body>
+    <input type="file" />
+    <img class="preview" alt="" />
+    <button>点击上传裁剪结果</button>
+    <script>
+      const inp = document.querySelector("input")
+      const preview = document.querySelector(".preview")
+      const btn = document.querySelector("button")
+      inp.onchange = e => {
+        const file = e.target.files[0]
+        const fileReader = new FileReader()
+        fileReader.onload = e => {
+          preview.src = e.target.result
+        }
+        fileReader.readAsDataURL(file)
+      }
+
+      function uploadCutResult({ cutWidth, cutHeight, cutX, cutY }) {
+        const cvs = document.createElement("canvas")
+        cvs.width = 200
+        cvs.height = 200
+        const ctx = cvs.getContext("2d")
+        ctx.drawImage(
+          preview,
+          cutX,
+          cutY,
+          cutWidth,
+          cutHeight,
+          0,
+          0,
+          cvs.width,
+          cvs.height
+        )
+        cvs.toBlob(blob => {
+          const file = new File([blob], "cut.png", {
+            type: "image/png"
+          })
+          console.log("file", file)
+        })
+        document.body.appendChild(cvs)
+      }
+
+      btn.onclick = () => {
+        uploadCutResult({
+          cutWidth: 300,
+          cutHeight: 300,
+          cutX: 100,
+          cutY: 100
+        })
+      }
+    </script>
+  </body>
+</html>
