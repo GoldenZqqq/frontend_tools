@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>动画时间线</title>
+    <style></style>
+    <style>
+      :root {
+        height: 200vh;
+        scroll-timeline-name: --animationTimeline;
+      }
+      #container {
+        height: 600px;
+        width: 80vw;
+        overflow-y: scroll;
+        position: relative;
+        border: 1px solid black;
+        background-color: #fe9d00;
+      }
+
+      #square {
+        background-color: #cc006f;
+        width: 100px;
+        height: 100px;
+        animation: rotateAnimation 1ms alternate;
+        animation-timeline: --animationTimeline;
+        position: absolute;
+        bottom: 0;
+      }
+
+      @keyframes rotateAnimation {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #stretcher {
+        height: 1500px;
+      }
+
+      #move {
+        width: 100px;
+        height: 100px;
+        background-color: lightblue;
+        position: absolute;
+        top: 500px;
+        animation: move 3s alternate;
+        animation-timeline: --animationTimeline;
+        animation-range: 20% 50%;
+      }
+
+      @keyframes move {
+        0% {
+          transform: translateX(0);
+        }
+
+        100% {
+          transform: translateX(100px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="square"></div>
+      <div id="stretcher"></div>
+      <div id="move"></div>
+    </div>
+  </body>
+</html>
