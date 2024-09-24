@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSE 流式内容展示</title>
+  </head>
+  <body>
+    <h1>Server-Sent Events(SSE) Example</h1>
+    <div id="messages" style="width: 500px; margin: 20px 0"></div>
+    <script>
+      // 创建 EventSource 实例，链接到后端的 SSE 路由
+      const eventSource = new EventSource("http://localhost:3000/sse")
+
+      // 监听接收到的数据事件
+      eventSource.onmessage = event => {
+        console.log("event", event)
+        const data = JSON.parse(event.data)
+        const messageElement = document.createElement("span")
+        messageElement.textContent = data.message
+        document.getElementById("messages").appendChild(messageElement)
+      }
+    </script>
+  </body>
+</html>
