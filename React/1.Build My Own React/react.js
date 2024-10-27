@@ -82,6 +82,10 @@ function workLoop(deadline) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
     shouldYield = deadline.timeRemaining() < 1
   }
+  // !nextUnitOfWork表示所有的任务都已经执行完成了 并且wipRoot表示还有待提交的工作根
+  if (!nextUnitOfWork && wipRoot) {
+    commitRoot()
+  }
   requestIdleCallback(workLoop)
 }
 
@@ -139,6 +143,7 @@ function reconcileChildren(fiber, elements) {
     let newFiber = null
     const sameType = oldFiber && element && element.type === oldFiber.type
     if (sameType) {
+      console.log("复用", element)
       newFiber = {
         type: oldFiber.type,
         props: element.props,
@@ -150,11 +155,13 @@ function reconcileChildren(fiber, elements) {
     }
     // 2.新增
     if (element && !sameType) {
+      console.log("新增", element)
       newFiber = createFiber(element, fiber)
       newFiber.effectTag = "PLACEMENT" // 新增
     }
     // 3.删除
     if (oldFiber && !sameType) {
+      console.log("删除", oldFiber)
       oldFiber.effectTag = "DELETION" // 删除
       deletions.push(oldFiber)
     }
@@ -170,4 +177,50 @@ function reconcileChildren(fiber, elements) {
   }
 }
 
-render(vdom, document.getElementById("root"))
+// 提交根节点
+function commitRoot() {
+  // 遍历所有的删除操作
+  deletions.forEach(commitWork)
+  // 提交当前根节点的子节点
+  commitWork(wipRoot.child)
+  currentRoot = wipRoot // 存储旧的fiber树
+  wipRoot = null // 因为把所有的变化都操作完成了回归原始
+}
+
+// 递归函数，用于提交工作，将fiber节点对应的DOM节点插入到父节点中
+function commitWork(fiber) {
+  if (!fiber) {
+    return
+  }
+  const domParent = fiber.parent.dom
+  if (fiber.effectTag === "PLACEMENT" && fiber.dom !== null) {
+    domParent.appendChild(fiber.dom)
+  } else if (fiber.effectTag === "UPDATE" && fiber.dom !== null) {
+    updateDom(fiber.dom, fiber.alternate.props, fiber.props)
+  } else if (fiber.effectTag === "DELETION" && fiber.dom !== null) {
+    domParent.removeChild(fiber.dom)
+  }
+
+  commitWork(fiber.child)
+  commitWork(fiber.sibling)
+}
+
+// 测试用例
+render(
+  React.createElement(
+    "div",
+    { id: "a" },
+    React.createElement("span", null, "hzqnb")
+  ),
+  document.getElementById("root")
+)
+setTimeout(() => {
+  render(
+    React.createElement(
+      "div",
+      { id: "a" },
+      React.createElement("p", null, "新元素")
+    ),
+    document.getElementById("root")
+  )
+}, 2000)
