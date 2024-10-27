@@ -114,9 +114,60 @@ function performUnitOfWork(fiber) {
   return null
 }
 
+function createFiber(element, parent) {
+  return {
+    type: element.type,
+    props: element.props,
+    parent,
+    dom: null,
+    child: null,
+    sibling: null,
+    alternate: null,
+    effectTag: null
+  }
+}
+
 function reconcileChildren(fiber, elements) {
   // 1.形成fiber树
   // 2.diff算法
+  let index = 0
+  let prevSibling = null
+  let oldFiber = fiber.alternate && fiber.alternate.child // 旧的fiber树
+  while (index < elements.length || oldFiber !== null) {
+    const element = elements[index]
+    // 1.复用
+    let newFiber = null
+    const sameType = oldFiber && element && element.type === oldFiber.type
+    if (sameType) {
+      newFiber = {
+        type: oldFiber.type,
+        props: element.props,
+        parent: fiber,
+        dom: oldFiber.dom,
+        alternate: oldFiber,
+        effectTag: "UPDATE" // 更新
+      }
+    }
+    // 2.新增
+    if (element && !sameType) {
+      newFiber = createFiber(element, fiber)
+      newFiber.effectTag = "PLACEMENT" // 新增
+    }
+    // 3.删除
+    if (oldFiber && !sameType) {
+      oldFiber.effectTag = "DELETION" // 删除
+      deletions.push(oldFiber)
+    }
+    if (oldFiber) oldFiber = oldFiber.sibling
+
+    if (index === 0) {
+      fiber.child = newFiber
+    } else if (element) {
+      prevSibling.sibling = newFiber
+    }
+    prevSibling = newFiber
+    index++
+  }
 }
 
 render(vdom, document.getElementById("root"))
