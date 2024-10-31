@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RequestIdleCallback_Demo</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // React为什么不用原生requestIdleCallback实现？
+      // 1.兼容性差 Safari不支持
+      // 2.控制精细度：React要根据组件优先级、更新的紧急程度更精确地安排渲染工作
+      // 3.执行时机 requestIdleCallback 回调函数的执行间隔是50ms，也就是20FPS，1秒内执行20次，间隔较长
+      // 4.差异性 每个浏览器实现该API的方式不同，导致执行时机差异有的快有的慢
+      const total = 5000
+      const arr = []
+
+      function generateArr() {
+        for (let i = 0; i < total; i++) {
+          arr.push(() => {
+            document.body.innerHTML += `<div>${i + 1}</div>`
+          })
+        }
+      }
+      generateArr()
+
+      const workLoop = time => {
+        if (time.timeRemaining() > 1 && arr.length > 0) {
+          arr.shift()()
+        }
+        requestIdleCallback(workLoop)
+      }
+
+      requestIdleCallback(workLoop)
+    </script>
+  </body>
+</html>
