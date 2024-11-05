@@ -91,18 +91,32 @@ class MyPromise {
       this.#runTask()
     })
   }
+
+  catch(onRejected) {
+    return this.then(null, onRejected)
+  }
+
+  finally(onFinally) {
+    return this.then(
+      res => {
+        onFinally()
+        return res
+      },
+      err => {
+        onFinally()
+        throw err
+      }
+    )
+  }
 }
 
 /* ========================== 测试案例 ========================== */
 const p = new MyPromise((resolve, reject) => {
-  reject(1)
+  resolve("成功")
 })
 
-;(async () => {
-  try {
-    const res = await p
-    console.log("[ res ] >", res)
-  } catch (error) {
-    console.log("[ error ] >", error)
-  }
-})()
+p.finally(() => {
+  console.log("完成了")
+}).then(res => {
+  console.log(res)
+})
