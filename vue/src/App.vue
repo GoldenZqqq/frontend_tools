@@ -1,43 +1,27 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { useRouter } from "vue-router"
 import SideMenu from "./components/SideMenu.vue"
-import ContentView from "./components/ContentView.vue"
-import type { MenuCategory } from "./types/menu"
+import type { MenuItem } from "./types/menu"
 
-const menuItems = ref<MenuCategory[]>([
-  {
-    title: "Vue 基础",
-    children: [
-      { id: "template-syntax", title: "模板语法" },
-      { id: "reactivity", title: "响应式原理" },
-      { id: "computed-watch", title: "计算属性与侦听器" }
-    ]
-  },
-  {
-    title: "Vue 组件",
-    children: [
-      { id: "component-basics", title: "组件基础" },
-      { id: "props-emits", title: "Props 与事件" },
-      { id: "slots", title: "插槽使用" },
-      { id: "state-reset-hook", title: "状态重置 Hook" }
-    ]
-  },
-  {
-    title: "Vue 生态",
-    children: [
-      { id: "vue-router", title: "Vue Router" },
-      { id: "pinia", title: "状态管理 Pinia" },
-      { id: "composition", title: "组合式 API" }
-    ]
-  }
+const router = useRouter()
+const menuItems = ref<MenuItem[]>([
+  { id: "state-reset-hook", title: "1.Vue组件状态重置 Hook" },
+  // { id: "props-emits", title: "2.Props 与事件" }
 ])
+
+const goHome = () => {
+  router.push("/")
+}
 </script>
 
 <template>
   <div class="app-container">
     <header class="header">
-      <img src="./assets/vue.svg" class="logo" alt="Vue logo" />
-      <h1>Vue 知识库</h1>
+      <div class="header-content" @click="goHome">
+        <img src="./assets/img/Shin-chan.jpeg" class="logo" alt="蜡笔小新" />
+        <h1>Vue Collection</h1>
+      </div>
     </header>
     <div class="main-container">
       <SideMenu :items="menuItems" />
@@ -46,7 +30,7 @@ const menuItems = ref<MenuCategory[]>([
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .app-container {
   height: 100vh;
   display: flex;
@@ -54,12 +38,20 @@ const menuItems = ref<MenuCategory[]>([
 }
 
 .header {
-  background: #42b883;
+  background: var(--primary-color);
   color: white;
   padding: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
 }
 
 .logo {

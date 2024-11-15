@@ -5,19 +5,18 @@ const route = useRoute()
 </script>
 
 <template>
-  <div class="knowledge-layout p50">
-    <h1>{{ route.meta.title }}</h1>
+  <div class="knowledge-layout">
     <div class="content">
-      <h2>介绍</h2>
-      <p>{{ route.meta.description }}</p>
-      
-      <!-- 这里渲染实际的内容 -->
+      <h1>{{ route.meta.title }}</h1>
+      <p class="description">{{ route.meta.description }}</p>
+      <div class="divider"></div>
+      <!-- 子路由内容 -->
       <router-view></router-view>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .knowledge-layout {
   flex: 1;
   padding: 2rem;
@@ -26,21 +25,25 @@ const route = useRoute()
 
 .content {
   max-width: 800px;
-}
+  margin: 0 auto;
 
-h1 {
-  color: #42b883;
-  margin-bottom: 2rem;
-}
+  h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
 
-h2 {
-  color: #2c3e50;
-  margin: 1.5rem 0 1rem;
-}
+  .description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+  }
 
-p {
-  line-height: 1.6;
-  color: #666;
-  margin-bottom: 2rem;
+  .divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 2rem 0;
+  }
 }
 </style> 

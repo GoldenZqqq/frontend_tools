@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import type { MenuCategory } from '../types/menu'
+import { ref } from "vue"
+import { useRouter } from "vue-router"
+import type { MenuItem } from "../types/menu"
 
 const router = useRouter()
 const props = defineProps<{
-  items: MenuCategory[]
+  items: MenuItem[]
 }>()
 
 const activeItem = ref<string | null>(null)
@@ -18,18 +18,13 @@ const handleItemClick = (itemId: string): void => {
 
 <template>
   <div class="side-menu">
-    <div v-for="category in items" :key="category.title" class="category">
-      <h2 class="category-title">{{ category.title }}</h2>
-      <div class="category-items">
-        <div
-          v-for="item in category.children"
-          :key="item.id"
-          :class="['menu-item', { active: activeItem === item.id }]"
-          @click="handleItemClick(item.id)"
-        >
-          {{ item.title }}
-        </div>
-      </div>
+    <div
+      v-for="item in items"
+      :key="item.id"
+      :class="['menu-item', { active: activeItem === item.id }]"
+      @click="handleItemClick(item.id)"
+    >
+      <h2 class="category-title">{{ item.title }}</h2>
     </div>
   </div>
 </template>
@@ -70,4 +65,4 @@ const handleItemClick = (itemId: string): void => {
   background: #42b88333;
   color: #42b883;
 }
-</style> 
+</style>

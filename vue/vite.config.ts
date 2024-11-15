@@ -5,9 +5,15 @@ import Components from "unplugin-vue-components/vite"
 import UnoCSS from "unocss/vite"
 import { presetUno, presetAttributify, presetIcons } from "unocss"
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { resolve } from 'path' 
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src')  // 添加路径别名配置
+    }
+  },
   plugins: [
     vue(),
     AutoImport({
