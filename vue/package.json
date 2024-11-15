@@ -1,0 +1,28 @@
+{
+  "name": "vue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@unocss/preset-attributify": "^0.64.1",
+    "@unocss/preset-icons": "^0.64.1",
+    "@unocss/preset-uno": "^0.64.1",
+    "@vitejs/plugin-vue": "^5.2.0",
+    "typescript": "^5.6.3",
+    "unocss": "^0.64.1",
+    "unplugin-auto-import": "^0.18.4",
+    "unplugin-vue-components": "^0.27.4",
+    "vite": "^5.4.11",
+    "vue-tsc": "^2.1.10"
+  }
+}
