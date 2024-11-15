@@ -12,7 +12,7 @@ const activeItem = ref<string | null>(null)
 
 const handleItemClick = (itemId: string): void => {
   activeItem.value = itemId
-  router.push(`/${itemId}`)
+  router.push(`/knowledge/${itemId}`)
 }
 </script>
 

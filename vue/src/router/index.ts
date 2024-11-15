@@ -10,7 +10,7 @@ const router = createRouter({
       component: ContentView
     },
     {
-      path: "/:id",
+      path: "/knowledge",
       component: KnowledgeLayout,
       children: [
         {

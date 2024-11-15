@@ -4,7 +4,7 @@
 <template>
   <div class="content-view">
     <div class="welcome-message">
-      <h2>Vue奇技淫巧集</h2>
+      <h2>Vue中的奇技淫巧</h2>
       <p class="intro">
         这是我个人整理的Vue开发技巧与实用方案集合。在日常开发中，我们经常会遇到一些特殊的需求和场景，
         这些场景可能需要一些独特的解决方案。这个项目就是为了收集和分享这些实用的开发技巧，
