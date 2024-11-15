@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const state = ref({
+import { useResetableRef } from '@/hooks/useResetable'
+
+const [state, reset] = useResetableRef({
   a: 1,
   b: 2,
   c: [1, 2, 3]
