@@ -1,53 +1,46 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
-const router = useRouter()
-
-const goHome = (): void => {
-  router.push('/')
-}
+const route = useRoute()
 </script>
 
 <template>
-  <div class="knowledge-layout">
-    <div class="knowledge-header">
-      <button class="back-button" @click="goHome">
-        <span class="arrow">←</span> 返回首页
-      </button>
-    </div>
-    <div class="knowledge-content">
-      <slot></slot>
+  <div class="knowledge-layout p50">
+    <h1>{{ route.meta.title }}</h1>
+    <div class="content">
+      <h2>介绍</h2>
+      <p>{{ route.meta.description }}</p>
+      
+      <!-- 这里渲染实际的内容 -->
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <style scoped>
 .knowledge-layout {
+  flex: 1;
   padding: 2rem;
+  overflow-y: auto;
 }
 
-.knowledge-header {
+.content {
+  max-width: 800px;
+}
+
+h1 {
+  color: #42b883;
   margin-bottom: 2rem;
 }
 
-.back-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #42b883;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
+h2 {
+  color: #2c3e50;
+  margin: 1.5rem 0 1rem;
 }
 
-.back-button:hover {
-  background: #3aa876;
-}
-
-.arrow {
-  font-size: 1.2rem;
+p {
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 2rem;
 }
 </style> 

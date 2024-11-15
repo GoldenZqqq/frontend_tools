@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ContentView: typeof import('./components/ContentView.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElSpace: typeof import('element-plus/es')['ElSpace']
     KnowledgeLayout: typeof import('./components/KnowledgeLayout.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
