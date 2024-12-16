@@ -129,6 +129,34 @@ class MyPromise {
       resolve(cb(...args))
     })
   }
+
+  static all(promises) {
+    // 先转换成数组
+    promises = Array.from(promises)
+    return new MyPromise((resolve, reject) => {
+      const result = []
+      if (!promises.length) {
+        resolve(result)
+      }
+
+      // 声明一个计数器，用来记录已经完成的 Promise 数量
+      let count = 0
+
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise).then(res => {
+          // 使用下标保证顺序
+          result[index] = res
+
+          count++
+
+          // 如果计数器等于 promises 的长度，说明所有 Promise 都已完成，返回结果
+          if (count === promises.length) {
+            resolve(result)
+          }
+        }, reject)
+      })
+    })
+  }
 }
 
 /* ========================== 测试案例 ========================== */
