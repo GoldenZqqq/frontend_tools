@@ -108,15 +108,52 @@ class MyPromise {
       }
     )
   }
+
+  static resolve(value) {
+    if (value instanceof Promise) return value
+    return new Promise((resolve, reject) => {
+      if (isPromiseLike(value)) {
+        value.then(resolve, reject)
+      } else {
+        resolve(value)
+      }
+    })
+  }
+
+  static reject(reason) {
+    return new Promise((_, reject) => reject(reason))
+  }
+
+  static try(cb, ...args) {
+    return new Promise(resolve => {
+      resolve(cb(...args))
+    })
+  }
 }
 
 /* ========================== 测试案例 ========================== */
-const p = new MyPromise((resolve, reject) => {
-  resolve("成功")
-})
+// MyPromise.resolve(new Promise((resolve, reject) => reject(2))).then(
+//   res => {
+//     console.log(res)
+//   },
+//   err => {
+//     console.log("error", err)
+//   }
+// )
 
-p.finally(() => {
-  console.log("完成了")
-}).then(res => {
-  console.log(res)
-})
+// MyPromise.reject(1).then(undefined, err => {
+//   console.log("error", err)
+// })
+
+function fn(a, b, c) {
+  return a + b + c
+}
+
+MyPromise.try(fn, 1, 2, 3).then(
+  res => {
+    console.log(res)
+  },
+  err => {
+    console.log("11111111111111error", err)
+  }
+)
