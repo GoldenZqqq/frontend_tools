@@ -220,35 +220,107 @@
       autoFillButton.style.fontSize = "12px"
 
       autoFillButton.addEventListener("click", () => {
-        // 农业银行预约页面的表单字段选择器 - 更新为实际的Angular/Ionic结构
-        const nameInput = document.querySelector('input[name="name"][ng-model="appointInfo.name"]')
-        const idCardInput = document.querySelector('input[name="identNo"][ng-model="appointInfo.identNo"]')
-        const mobileInput = document.querySelector('input[name="mobile"][ng-model="appointInfo.mobile"]')
+        // 通用选择器策略
+        const selectors = {
+          "abchina.com": {
+            name: 'input[name="name"][ng-model="appointInfo.name"]',
+            idCard: 'input[name="identNo"][ng-model="appointInfo.identNo"]',
+            mobile: 'input[name="mobile"][ng-model="appointInfo.mobile"]'
+          },
+          "icbc.com.cn": {
+            name: 'input[placeholder*="姓名"],input[name*="name"],input[id*="name"]',
+            idCard:
+              'input[placeholder*="证件"],input[name*="idCard"],input[id*="idCard"]',
+            mobile:
+              'input[type="tel"],input[placeholder*="手机"],input[name*="mobile"]'
+          },
+          "ccb.com": {
+            name: 'input[placeholder*="姓名"],input[name*="userName"]',
+            idCard: 'input[placeholder*="身份证"],input[name*="idCard"]',
+            mobile: 'input[placeholder*="手机"],input[name*="mobile"]'
+          },
+          // 通用选择器
+          default: {
+            name: [
+              'input[placeholder*="姓名"]',
+              'input[name*="name"]',
+              'input[id*="name"]',
+              'input[name*="userName"]'
+            ].join(","),
+            idCard: [
+              'input[placeholder*="证件"]',
+              'input[placeholder*="身份证"]',
+              'input[name*="idCard"]',
+              'input[name*="idNo"]',
+              'input[id*="idCard"]'
+            ].join(","),
+            mobile: [
+              'input[type="tel"]',
+              'input[placeholder*="手机"]',
+              'input[name*="mobile"]',
+              'input[name*="phone"]',
+              'input[id*="mobile"]',
+              'input[id*="phone"]'
+            ].join(",")
+          }
+        }
+
+        // 获取当前网站对应的选择器
+        const hostname = window.location.hostname
+        const currentSelectors =
+          Object.entries(selectors).find(([domain]) =>
+            hostname.includes(domain)
+          )?.[1] || selectors.default
+
+        // 查找输入框
+        const nameInput = document.querySelector(currentSelectors.name)
+        const idCardInput = document.querySelector(currentSelectors.idCard)
+        const mobileInput = document.querySelector(currentSelectors.mobile)
 
         if (nameInput && idCardInput && mobileInput) {
-          // 模拟用户输入，使用Angular特定的事件触发
+          // 模拟用户输入
           const simulateInput = (element, value) => {
             // 先聚焦元素
             element.focus()
             // 设置值
             element.value = value
-            // 获取Angular的scope和控制器
-            const scope = angular.element(element).scope()
-            const ngModel = angular.element(element).controller('ngModel')
-            
-            // 更新Angular模型值
-            if (scope && ngModel) {
-              ngModel.$setViewValue(value)
-              ngModel.$render()
-              scope.$apply()
-            }
 
-            // 触发所有必要的事件
-            const events = ['input', 'change', 'blur']
-            events.forEach(eventType => {
-              const event = new Event(eventType, { bubbles: true, cancelable: true })
-              element.dispatchEvent(event)
-            })
+            try {
+              // 尝试Angular方式更新
+              if (window.angular) {
+                const scope = angular.element(element).scope()
+                const ngModel = angular.element(element).controller("ngModel")
+                if (scope && ngModel) {
+                  ngModel.$setViewValue(value)
+                  ngModel.$render()
+                  scope.$apply()
+                }
+              }
+
+              // 触发标准DOM事件
+              const events = ["input", "change", "blur"]
+              events.forEach(eventType => {
+                const event = new Event(eventType, {
+                  bubbles: true,
+                  cancelable: true
+                })
+                element.dispatchEvent(event)
+              })
+
+              // 尝试Vue方式更新
+              if (element.__vue__) {
+                element.__vue__.$emit("input", value)
+              }
+
+              // 尝试React方式更新
+              const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                "value"
+              ).set
+              nativeInputValueSetter.call(element, value)
+            } catch (error) {
+              console.error("模拟输入事件失败:", error)
+            }
           }
 
           try {
@@ -257,18 +329,20 @@
             simulateInput(mobileInput, entry.mobile)
             showNotification(`已自动填充 ${entry.name} 的信息`)
           } catch (error) {
-            console.error('自动填充失败:', error)
+            console.error("自动填充失败:", error)
             showNotification("自动填充失败，请检查页面是否正确", "error")
           }
         } else {
-          // 输出更详细的错误信息
           const missingFields = []
-          if (!nameInput) missingFields.push('姓名')
-          if (!idCardInput) missingFields.push('身份证')
-          if (!mobileInput) missingFields.push('手机号')
-          
-          showNotification(`未找到以下输入框：${missingFields.join('、')}`, "error")
-          console.log('当前页面结构：', document.body.innerHTML)
+          if (!nameInput) missingFields.push("姓名")
+          if (!idCardInput) missingFields.push("身份证")
+          if (!mobileInput) missingFields.push("手机号")
+
+          showNotification(
+            `未找到以下输入框：${missingFields.join("、")}`,
+            "error"
+          )
+          console.log("当前选择器：", currentSelectors)
         }
       })
 
@@ -367,7 +441,7 @@
                   })
                   saveData() // 导入后自动保存
                 } catch (error) {
-                  showNotification("导入的文件格式不正确！", "error")
+                  showNotification("导入的文件格式不正确���", "error")
                 }
               }
               reader.readAsText(file)
@@ -402,25 +476,42 @@
       expandIcon.style.background = "#28a745"
       expandIcon.style.padding = "8px"
       expandIcon.style.borderRadius = "50%"
-      expandIcon.style.cursor = "move" // 改为移动光标
+      expandIcon.style.cursor = "move"
       expandIcon.style.boxShadow = "0 2px 12px rgba(0,0,0,0.15)"
       expandIcon.style.color = "#fff"
       expandIcon.style.display = "none"
       expandIcon.style.zIndex = "9999"
-      expandIcon.title = "展开预约助手（按住拖动）"
+      expandIcon.title = "展开助手（按住拖动）"
       document.body.appendChild(expandIcon)
 
       // 从存储中获取上次保存的位置
       const savedPosition = GM_getValue("iconPosition", null)
+      let xOffset = 0
+      let yOffset = 0
+
+      // 初始化拖拽位置
+      function initDragPosition() {
+        const rect = expandIcon.getBoundingClientRect()
+        if (!savedPosition) {
+          xOffset = window.innerWidth - rect.width - 10 // 默认右侧10px的位置
+          yOffset = window.innerHeight / 2 - rect.height / 2 // 垂直中
+        }
+      }
+
       if (savedPosition) {
         try {
           const { top, left } = JSON.parse(savedPosition)
           expandIcon.style.top = top
           expandIcon.style.left = left
-          expandIcon.style.right = 'auto'
-          expandIcon.style.transform = 'none'
+          expandIcon.style.right = "auto"
+          expandIcon.style.transform = "none"
+          // 从保存的位置计算初始偏移量
+          const rect = expandIcon.getBoundingClientRect()
+          xOffset = parseInt(left)
+          yOffset = parseInt(top)
         } catch (error) {
-          console.error('恢复位置失败:', error)
+          console.error("恢复位置失败:", error)
+          initDragPosition()
         }
       }
 
@@ -433,19 +524,18 @@
       let currentY
       let initialX
       let initialY
-      let xOffset = 0
-      let yOffset = 0
-
-      expandIcon.addEventListener("mousedown", dragStart)
-      document.addEventListener("mousemove", drag)
-      document.addEventListener("mouseup", dragEnd)
 
       function dragStart(e) {
         if (e.target === expandIcon || expandIcon.contains(e.target)) {
+          e.preventDefault()
           startX = e.clientX
           startY = e.clientY
           startTime = new Date().getTime()
-          
+
+          if (!isDragging) {
+            initDragPosition()
+          }
+
           initialX = e.clientX - xOffset
           initialY = e.clientY - yOffset
           isDragging = true
@@ -478,7 +568,9 @@
           const endX = e.clientX
           const endY = e.clientY
           const endTime = new Date().getTime()
-          const moveDistance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2))
+          const moveDistance = Math.sqrt(
+            Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
+          )
           const moveTime = endTime - startTime
 
           // 如果移动距离小于5像素且时间小于200ms，认为是点击而不是拖拽
@@ -507,9 +599,17 @@
         el.style.left = xPos + "px"
       }
 
+      expandIcon.addEventListener("mousedown", dragStart)
+      document.addEventListener("mousemove", drag)
+      document.addEventListener("mouseup", dragEnd)
+
       collapseButton.addEventListener("click", () => {
         container.style.display = "none"
         expandIcon.style.display = "block"
+        // 初始化拖拽位置
+        if (!savedPosition) {
+          initDragPosition()
+        }
       })
 
       buttonsContainer.appendChild(addButton)
