@@ -235,9 +235,32 @@
               'input[type="tel"],input[placeholder*="手机"],input[name*="mobile"]'
           },
           "ccb.com": {
-            name: 'input[placeholder*="姓名"],input[name*="userName"]',
-            idCard: 'input[placeholder*="身份证"],input[name*="idCard"]',
-            mobile: 'input[placeholder*="手机"],input[name*="mobile"]'
+            name: [
+              'input[placeholder*="姓名"]',
+              'input[name*="userName"]',
+              'input[name*="custName"]',
+              'input[name*="name"]',
+              'input[data-field*="name"]',
+              '.el-input__inner[placeholder*="姓名"]',
+              '.form-control[placeholder*="姓名"]'
+            ].join(","),
+            idCard: [
+              'input[placeholder*="身份证"]',
+              'input[name*="idCard"]',
+              'input[name*="certNo"]',
+              'input[data-field*="idCard"]',
+              '.el-input__inner[placeholder*="身份证"]',
+              '.form-control[placeholder*="证件"]'
+            ].join(","),
+            mobile: [
+              'input[placeholder*="手机"]',
+              'input[name*="mobile"]',
+              'input[name*="phoneNo"]',
+              'input[type="tel"]',
+              'input[data-field*="mobile"]',
+              '.el-input__inner[placeholder*="手机"]',
+              '.form-control[placeholder*="手机"]'
+            ].join(",")
           },
           // 通用选择器
           default: {
@@ -282,10 +305,27 @@
           const simulateInput = (element, value) => {
             // 先聚焦元素
             element.focus()
+            // 保存原始值
+            const originalValue = element.value
             // 设置值
             element.value = value
 
             try {
+              // 尝试Vue方式更新
+              if (element.__vue__) {
+                element.__vue__.$emit("input", value)
+                // 触发v-model更新
+                const vueEvent = new Event("input", { bubbles: true })
+                element.dispatchEvent(vueEvent)
+              }
+
+              // 尝试jQuery方式更新
+              if (window.jQuery) {
+                const $element = window.jQuery(element)
+                $element.val(value)
+                $element.trigger("input").trigger("change").trigger("blur")
+              }
+
               // 尝试Angular方式更新
               if (window.angular) {
                 const scope = angular.element(element).scope()
@@ -297,20 +337,28 @@
                 }
               }
 
-              // 触发标准DOM事件
+              // 触发原生DOM事件
               const events = ["input", "change", "blur"]
               events.forEach(eventType => {
-                const event = new Event(eventType, {
-                  bubbles: true,
-                  cancelable: true
-                })
+                // 创建事件
+                let event
+                try {
+                  // 尝试创建InputEvent
+                  event = new InputEvent(eventType, {
+                    bubbles: true,
+                    cancelable: true,
+                    inputType: "insertText",
+                    data: value
+                  })
+                } catch (e) {
+                  // 降级使用Event
+                  event = new Event(eventType, {
+                    bubbles: true,
+                    cancelable: true
+                  })
+                }
                 element.dispatchEvent(event)
               })
-
-              // 尝试Vue方式更新
-              if (element.__vue__) {
-                element.__vue__.$emit("input", value)
-              }
 
               // 尝试React方式更新
               const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
@@ -318,8 +366,28 @@
                 "value"
               ).set
               nativeInputValueSetter.call(element, value)
+
+              // 如果值没有更新成功，尝试其他方法
+              if (element.value !== value) {
+                // 使用剪贴板API
+                const originalExecCommand = document.execCommand.bind(document)
+                element.select()
+                originalExecCommand("insertText", false, value)
+              }
+
+              // 额外触发特定的事件
+              const customEvents = ["compositionend", "keyup", "keydown"]
+              customEvents.forEach(eventType => {
+                const event = new Event(eventType, {
+                  bubbles: true,
+                  cancelable: true
+                })
+                element.dispatchEvent(event)
+              })
             } catch (error) {
               console.error("模拟输入事件失败:", error)
+              // 确保至少值被设置
+              element.value = value
             }
           }
 
@@ -441,7 +509,7 @@
                   })
                   saveData() // 导入后自动保存
                 } catch (error) {
-                  showNotification("导入的文件格式不正确���", "error")
+                  showNotification("导入的文件格式不正确", "error")
                 }
               }
               reader.readAsText(file)
@@ -634,7 +702,7 @@
         })
         showNotification("已加载保存的数据！")
       } catch (error) {
-        showNotification("加载保存的数据失败！", "error")
+        showNotification("加载保存���数据失败！", "error")
       }
     }
 
